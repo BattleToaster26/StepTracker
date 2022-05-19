@@ -1,7 +1,6 @@
 package com.example.steptracker
 
 import android.content.Context
-import android.content.Intent
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
@@ -9,34 +8,19 @@ import android.hardware.SensorManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.*
 
 class MainActivity : AppCompatActivity(), SensorEventListener {
 
-
-    lateinit var startButton: Button
-
-
     private var sensorManager: SensorManager? = null
 
     private var running = false
-
-    private var totalSteps = 100f
-
+    private var totalSteps = 0f
     private var previousTotalSteps = 0f
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        startButton = findViewById(R.id.startButton)
-
-
-        startButton.setOnClickListener() {
-
-        }
 
         loadData()
         resetSteps()
@@ -61,14 +45,14 @@ class MainActivity : AppCompatActivity(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent?) {
 
-        var tv_stepsTaken = findViewById<TextView>(R.id.tv_stepsTaken)
+        var stepsTaken = findViewById<TextView>(R.id.tv_stepsTaken)
 
         if (running) {
             totalSteps = event!!.values[0]
 
             val currentSteps = totalSteps.toInt() - previousTotalSteps.toInt()
 
-            tv_stepsTaken.text = ("$currentSteps")
+            stepsTaken.text = ("$currentSteps")
         }
     }
 
